@@ -11,6 +11,18 @@ import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfigura
 @SpringBootApplication
 public class BackEndApplication {
 
+	public String EMAIL_USER = System.getenv("EMAIL_USER");
+	public String EMAIL_CODE = System.getenv("EMAIL_CODE");
+	public String CLIENT_SECRET = System.getenv("CLIENT_SECRET");
+	public String DEBUG = System.getenv("DEBUG");
+	public String CLIENT_ID = System.getenv("CLIENT_ID");
+	public String SANDBOX = System.getenv("SANDBOX");
+	public String JWT_SECRET = System.getenv("JWT_SECRET");
+	public String MYSQLUSER = System.getenv("MYSQLUSER");
+	public String MYSQL_ROOT_PASSWORD = System.getenv("MYSQL_ROOT_PASSWORD");
+	public String MYSQL_URL = System.getenv("MYSQL_URL");
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(BackEndApplication.class, args);
 		
