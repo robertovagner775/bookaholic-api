@@ -48,12 +48,14 @@ public class SecurityConfig {
                  .cors(Customizer.withDefaults()).
                 authorizeHttpRequests(authorize -> 
                  authorize.
+              
                  requestMatchers(HttpMethod.POST, "/livro/avaliacao").hasAuthority("ROLE_LEITOR")
                  .requestMatchers(HttpMethod.POST, "/biblioteca/livro").hasAuthority("ROLE_LEITOR")
                   .requestMatchers(HttpMethod.GET, "/biblioteca/listLivroById").hasAuthority("ROLE_LEITOR")
                   .requestMatchers(HttpMethod.PUT, "/biblioteca/statusAndamento").hasAuthority("ROLE_LEITOR")
                   .requestMatchers(HttpMethod.PUT, "/biblioteca/statusFinalizado").hasAuthority("ROLE_LEITOR")
                  .requestMatchers(HttpMethod.GET, "/livro/viewAvaliacao").permitAll()
+                 .requestMatchers(HttpMethod.GET, "/aa").permitAll()
                  .requestMatchers(HttpMethod.GET, "/livro/avaliacaoUsuario").permitAll()
                  .requestMatchers(HttpMethod.POST, "/usuario/*").permitAll()
                   .requestMatchers( "/error").permitAll()
