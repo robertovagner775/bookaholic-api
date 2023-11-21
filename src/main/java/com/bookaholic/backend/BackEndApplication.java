@@ -21,6 +21,7 @@ public class BackEndApplication {
 	public String MYSQLUSER = System.getenv("MYSQLUSER");
 	public String MYSQL_ROOT_PASSWORD = System.getenv("MYSQL_ROOT_PASSWORD");
 	public String MYSQL_URL = System.getenv("MYSQL_URL");
+	public String PORT = System.getenv("PORT");
 
 
 	public static void main(String[] args) {
