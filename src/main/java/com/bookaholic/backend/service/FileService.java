@@ -48,7 +48,7 @@ public class FileService {
     public FileResponse uploadFileEpub(MultipartFile file, Long id) {
 
             String FTP_ADDRESS = "files.000webhost.com";
-            String LOGIN = "robertomeudominio";
+            String LOGIN = "robertomeudominio/public_html/front-end/files/";
             String PSW = "12345@Fatec";
             FTPClient con = null;
 
@@ -78,6 +78,7 @@ public class FileService {
                 Files.copy(file.getInputStream(), Path.of(targetPath));
                 
                 con.storeFile(file.getOriginalFilename(), file.getInputStream());
+            
                 con.logout();
                 con.disconnect();
                 var fileResponse = new FileResponse();
