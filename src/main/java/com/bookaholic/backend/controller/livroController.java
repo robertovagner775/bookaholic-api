@@ -20,8 +20,10 @@ import com.bookaholic.backend.dto.SelecAvalDto;
 import com.bookaholic.backend.model.Avaliacao;
 import com.bookaholic.backend.model.ErrorResponse;
 import com.bookaholic.backend.model.Livro;
+import com.bookaholic.backend.model.LivroDto;
 import com.bookaholic.backend.model.Usuario;
 import com.bookaholic.backend.repository.AvaliacaoRepository;
+import com.bookaholic.backend.repository.ImagemRepository;
 import com.bookaholic.backend.repository.LivroRepository;
 import com.bookaholic.backend.repository.UsuarioRepository;
 
@@ -29,6 +31,8 @@ import com.bookaholic.backend.repository.UsuarioRepository;
 @RequestMapping("/livro")
 public class livroController {
     
+    @Autowired
+    ImagemRepository imagemRepository;
 
     @Autowired
     AvaliacaoRepository avaliacaoRepository;
@@ -49,6 +53,17 @@ public class livroController {
        }
        return ResponseEntity.badRequest().build();
     }
+
+    @GetMapping("/livroSemana")
+    public List<LivroDto> livroSemana(@RequestParam("title") String title, @RequestParam("title2") String title2) {
+        return imagemRepository.findBySemanal(title, title2);
+    }
+
+    @GetMapping("/scoreSemanal")
+    public List<SelecAvalDto> scoreSemanal() {
+        return avaliacaoRepository.findByScoreSemanal();
+    }
+
 
     @GetMapping(value = "/viewAvaliacao")
     public ResponseEntity<?> viewAvaliacao(@RequestParam("id") Long id) {

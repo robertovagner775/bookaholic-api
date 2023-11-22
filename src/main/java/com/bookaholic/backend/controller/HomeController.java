@@ -37,4 +37,9 @@ public class HomeController {
     public LivroDto viewLivroAvaliacao(@RequestParam("id") Long id) {
         return imagemRepository.findAllByIdBook(id);
     }
+
+    @GetMapping("/livroAlfabetica")
+    public List<LivroDto> viewLivroAlfabetica() {
+        return imagemRepository.findAllJoinBookDois();
+    }
 }

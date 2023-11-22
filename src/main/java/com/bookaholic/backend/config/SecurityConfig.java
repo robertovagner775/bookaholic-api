@@ -55,10 +55,12 @@ public class SecurityConfig {
                   .requestMatchers(HttpMethod.PUT, "/biblioteca/statusAndamento").hasAuthority("ROLE_LEITOR")
                   .requestMatchers(HttpMethod.PUT, "/biblioteca/statusFinalizado").hasAuthority("ROLE_LEITOR")
                  .requestMatchers(HttpMethod.GET, "/livro/viewAvaliacao").permitAll()
-                 .requestMatchers(HttpMethod.GET, "/aa").permitAll()
                  .requestMatchers(HttpMethod.GET, "/livro/avaliacaoUsuario").permitAll()
+                   .requestMatchers(HttpMethod.GET, "/livro/livroSemana").permitAll()
+                                  .requestMatchers(HttpMethod.GET, "/livro/scoreSemanal").permitAll()
                  .requestMatchers(HttpMethod.POST, "/usuario/*").permitAll()
                   .requestMatchers( "/error").permitAll()
+                  .requestMatchers(HttpMethod.GET, "/aa").permitAll()
                  .requestMatchers(HttpMethod.POST, "/payment/*").permitAll()
                  .requestMatchers(HttpMethod.GET, "/usuario/*").permitAll()
                  .requestMatchers(HttpMethod.GET, "/home/*").permitAll()
@@ -68,6 +70,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/usuario")
                 .permitAll()
                 .anyRequest().authenticated()
+
+               
 
                 
                 )
@@ -91,7 +95,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource(){
     
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:5500"));
+		configuration.setAllowedOrigins(Arrays.asList("https://robertomeudominio.000webhostapp.com/"));
 		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT"));
         configuration.setAllowedHeaders(List.of("Access-Control-Allow-Origin", "*"));
          configuration.setAllowedHeaders(List.of("Access-Control-Allow-Methods", "*"));
