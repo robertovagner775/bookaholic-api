@@ -16,7 +16,7 @@ public interface BibliotecaRepository extends JpaRepository<Biblioteca, Long> {
 
    //String titulo, String subtitulo, String sinopsem , String pathImagem, String pathEpub, String status
 
-   @Query(" SELECT new com.bookaholic.backend.dto.BiblioDto(b.id_biblioteca id, l.titulo , l.escritor.nome subtitulo, l.sinopse sinopse, m.path pathImagem, e.path pathEpub, b.status)  FROM biblioteca b JOIN b.imagem m JOIN m.id_livro l  JOIN l.epub  e WHERE b.usuario.id = :id ")
+   @Query(" SELECT new com.bookaholic.backend.dto.BiblioDto(b.id_biblioteca id, l.titulo , l.escritor.nome subtitulo, l.sinopse sinopse, m.nome_imagem pathImagem, e.nome_arquivo pathEpub, b.status)  FROM biblioteca b JOIN b.imagem m JOIN m.id_livro l  JOIN l.epub  e WHERE b.usuario.id = :id ")
    List<BiblioDto> viewBiblioteca(Long id);
 
    
