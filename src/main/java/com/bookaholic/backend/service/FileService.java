@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
 
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,33 +46,51 @@ public class FileService {
     
 
     public FileResponse uploadFileEpub(MultipartFile file, Long id) {
-        
-        var originalFileName = file.getOriginalFilename();
-        var fileExtencion = originalFileName.substring(originalFileName.lastIndexOf("."));
-        var ramdomFilename = UUID.randomUUID() + fileExtencion;
 
-        var targetPath =  uploadPathEpub + "/"  + ramdomFilename;
+            String FTP_ADDRESS = "files.000webhost.com";
+            String LOGIN = "robertomeudominio";
+            String PSW = "12345@Fatec";
+            FTPClient con = null;
 
         try{
-            if(!Files.exists(Path.of(uploadPathEpub))) {
-                Files.createDirectories(Path.of(uploadPathEpub));
-            }
+            con = new FTPClient();
+            con.connect(FTP_ADDRESS);
 
-            Epub epub = new Epub(null,fileExtencion, ramdomFilename ,targetPath, file.getSize());
-            Long idEpub = epubRepository.save(epub).getIdEpub();
-            setIdEpubLivro(idEpub, id);
-      
-            Files.copy(file.getInputStream(), Path.of(targetPath));
+            if(con.login(LOGIN, PSW)){
+                con.enterLocalPassiveMode();
+                con.setFileType(FTP.COMPRESSED_TRANSFER_MODE);
 
-            var fileResponse = new FileResponse();
-            fileResponse.setFilename(ramdomFilename);
-            fileResponse.setSize(file.getSize());
-            fileResponse.setStatusMessage("Sucesso !!!!!!!!!");
+                
+                var originalFileName = file.getOriginalFilename();
+                var fileExtencion = originalFileName.substring(originalFileName.lastIndexOf("."));
+                var ramdomFilename = UUID.randomUUID() + fileExtencion;
 
-            return fileResponse;
+                var targetPath =  uploadPathEpub + "/"  + ramdomFilename;
+
+                if(!Files.exists(Path.of(uploadPathEpub))) {
+                    Files.createDirectories(Path.of(uploadPathEpub));
+                }
+
+                Epub epub = new Epub(null,fileExtencion, ramdomFilename ,targetPath, file.getSize());
+                Long idEpub = epubRepository.save(epub).getIdEpub();
+                setIdEpubLivro(idEpub, id);
+
+                Files.copy(file.getInputStream(), Path.of(targetPath));
+                
+                con.storeFile(file.getOriginalFilename(), file.getInputStream());
+                con.logout();
+                con.disconnect();
+                var fileResponse = new FileResponse();
+                fileResponse.setFilename(ramdomFilename);
+                fileResponse.setSize(file.getSize());
+                fileResponse.setStatusMessage("Sucesso !!!!!!!!!");
+                
+                return fileResponse;
+              }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     private void setIdEpubLivro(Long id_epub, Long id_livro) {
@@ -80,14 +100,29 @@ public class FileService {
     }
 
      public FileResponse uploadFileImagem(MultipartFile file, Long id) {
+
+
         
-        var originalFileName = file.getOriginalFilename();
-        var fileExtencion = originalFileName.substring(originalFileName.lastIndexOf("."));
-        var ramdomFilename = UUID.randomUUID() + fileExtencion;
+         String FTP_ADDRESS = "files.000webhost.com";
+         String LOGIN = "robertomeudominio";
+         String PSW = "12345@Fatec";
+         FTPClient con = null;
+         
+         try{
+       
+            con = new FTPClient();
+            con.connect(FTP_ADDRESS);
 
-        var targetPath = uploadPathImagem + "/"  + ramdomFilename;
+            if(con.login(LOGIN, PSW)){
+                con.enterLocalPassiveMode();
+                con.setFileType(FTP.BINARY_FILE_TYPE);
+            
+                var originalFileName = file.getOriginalFilename();
+                var fileExtencion = originalFileName.substring(originalFileName.lastIndexOf("."));
+                var ramdomFilename = UUID.randomUUID() + fileExtencion;
 
-        try{
+                var targetPath = uploadPathImagem + "/"  + ramdomFilename;
+
             if(!Files.exists(Path.of(uploadPathImagem))) {
                 Files.createDirectories(Path.of(uploadPathImagem));
             }
@@ -98,16 +133,28 @@ public class FileService {
             Imagem imagem = new Imagem(null, ramdomFilename, fileExtencion, targetPath, livroRepository.findById(id).get());
             imagemRepository.save(imagem);
 
+            
             Files.copy(file.getInputStream(), Path.of(targetPath));
-
+            
             var fileResponse = new FileResponse();
             fileResponse.setFilename(ramdomFilename);
             fileResponse.setSize(file.getSize());
             fileResponse.setStatusMessage("Sucesso !!!!!!!!!");
-
+            
+            con.storeFile(file.getOriginalFilename(), file.getInputStream());
+            con.logout();
+            con.disconnect();
+        
             return fileResponse;
-        } catch (IOException e) {
+            }
+        }catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        
     }
+        return null;
+
+    
+    
+
+}
 }
