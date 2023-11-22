@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.bookaholic.backend.dto.EmailDto;
 import com.bookaholic.backend.model.ConfirmationToken;
 
 import com.bookaholic.backend.model.Usuario;
@@ -68,13 +69,13 @@ public class UsuarioService {
         mailMessage.setTo(usuario.getEmail());
        
         mailMessage.setSubject("Complete Registration!");
-        mailMessage.setText("<h1> To confirm your account, please click here : </h1>"
-                +"http://localhost:8080/usuario/confirm-account?token="+confirmationToken.getConfirmationToken());
+        mailMessage.setText("To confirm your account, please click here"
+                +"https://bookaholic-api-production.up.railway.app/usuario/confirm-account?token="+confirmationToken.getConfirmationToken());
         emailService.sendEmail(mailMessage);
 
         System.out.println("Confirmation Token: " + confirmationToken.getConfirmationToken());
 
-        return ResponseEntity.ok("Verify email by the link sent on your email address");
+        return ResponseEntity.ok(new EmailDto("Um codigo de confirmação foi enviado para seu email. "));
         
 
          
