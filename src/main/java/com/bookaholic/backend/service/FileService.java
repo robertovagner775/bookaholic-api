@@ -71,13 +71,13 @@ public class FileService {
                     Files.createDirectories(Path.of(uploadPathEpub));
                 }
 
-                Epub epub = new Epub(null,fileExtencion, file.getOriginalFilename() ,targetPath, file.getSize());
+                Epub epub = new Epub(null,fileExtencion, ramdomFilename ,targetPath, file.getSize());
                 Long idEpub = epubRepository.save(epub).getIdEpub();
                 setIdEpubLivro(idEpub, id);
 
                 Files.copy(file.getInputStream(), Path.of(targetPath));
                 
-                con.storeFile(uploadPathEpub + file.getOriginalFilename(), file.getInputStream());
+                con.storeFile(uploadPathEpub + ramdomFilename, file.getInputStream());
             
                 con.logout();
                 con.disconnect();
@@ -123,7 +123,7 @@ public class FileService {
                 var ramdomFilename = UUID.randomUUID() + fileExtencion;
                 
                 var targetPath = uploadPathImagem + "/"  + ramdomFilename;
-                con.storeFile(uploadPathImagem + file.getOriginalFilename(), file.getInputStream());
+                con.storeFile(uploadPathImagem + ramdomFilename, file.getInputStream());
                 con.logout();
                 con.disconnect();
 
@@ -134,7 +134,7 @@ public class FileService {
             //Epub epub = new Epub(null,fileExtencion, ramdomFilename ,targetPath, file.getSize(), livroRepository.findById(id).get());
             //epubRepository.save(epub);
 
-            Imagem imagem = new Imagem(null, file.getOriginalFilename(), fileExtencion, targetPath, livroRepository.findById(id).get());
+            Imagem imagem = new Imagem(null, ramdomFilename, fileExtencion, targetPath, livroRepository.findById(id).get());
             imagemRepository.save(imagem);
 
             
