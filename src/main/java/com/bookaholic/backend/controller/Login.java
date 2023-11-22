@@ -109,9 +109,9 @@ public class Login  {
             if(usuario.getAuthorities().toString().equals("[ROLE_LEITOR]")) {
                 position = "LEITOR";
             } else if(usuario.getAuthorities().toString().equals("[ROLE_USER]")) {
-                position = "ADMIN";
-            } else {
                 position = "USER";
+            } else {
+                position = "ADMIN";
             }
             
             TokenDTO tokenDto = new TokenDTO(usuario.getId() , usuario.getName(),token,  position);

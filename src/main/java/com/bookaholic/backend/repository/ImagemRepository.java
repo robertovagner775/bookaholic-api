@@ -14,7 +14,7 @@ public interface ImagemRepository extends JpaRepository<Imagem, Long>{
    // @Query(value = "SELECT new com.bookaholic.backend.model.LivroDto(l.titulo, l.sinopse, l.editora , l.escritor, m.path path_imagem, e.path path_epub) FROM imagem  m JOIN m.livro l  INNER JOIN Epub.Livro e")
     //List<LivroDto> view_all_livro();
 
-    @Query(" SELECT new com.bookaholic.backend.model.LivroDto(l.id_livro , m.idImagem,l.titulo, l.sinopse, l.editora , l.escritor, m.path path_imagem, e.path path_epub)  FROM imagem m JOIN m.id_livro l JOIN l.epub e Group BY l.id_livro")
+    @Query(" SELECT new com.bookaholic.backend.model.LivroDto(l.id_livro , m.idImagem,l.titulo, l.sinopse, l.editora , l.escritor, m.path path_imagem, e.path path_epub)  FROM imagem m JOIN m.id_livro l JOIN l.epub e Group BY l.id_livro, m.idImagem")
     List<LivroDto> findAllJoinBook();
 
     
