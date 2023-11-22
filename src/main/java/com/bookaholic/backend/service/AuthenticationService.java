@@ -32,7 +32,7 @@ public class AuthenticationService implements UserDetailsService {
          if(usuario == null) {//here you can check that
              throw new UsernameNotFoundException("user not found");
             
-        } else if (usuario.isEnabled() == false){
+        } else if (usuario.isEnabled()){
             
             throw new BadCredentialsException("user not found");
         } 
