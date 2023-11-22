@@ -56,7 +56,7 @@ public class FileService {
             con = new FTPClient();
             con.connect(FTP_ADDRESS);
 
-            if(con.login(LOGIN, PSW)){
+            con.login(LOGIN, PSW);
                 con.enterLocalPassiveMode();
                 con.setFileType(FTP.COMPRESSED_TRANSFER_MODE);
 
@@ -86,11 +86,11 @@ public class FileService {
                 fileResponse.setStatusMessage("Sucesso !!!!!!!!!");
                 
                 return fileResponse;
-              }
+              
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return null;
+     
     }
 
     private void setIdEpubLivro(Long id_epub, Long id_livro) {
@@ -113,15 +113,18 @@ public class FileService {
             con = new FTPClient();
             con.connect(FTP_ADDRESS);
 
-            if(con.login(LOGIN, PSW)){
+            con.login(LOGIN, PSW);
                 con.enterLocalPassiveMode();
                 con.setFileType(FTP.BINARY_FILE_TYPE);
-            
+                
                 var originalFileName = file.getOriginalFilename();
                 var fileExtencion = originalFileName.substring(originalFileName.lastIndexOf("."));
                 var ramdomFilename = UUID.randomUUID() + fileExtencion;
-
+                
                 var targetPath = uploadPathImagem + "/"  + ramdomFilename;
+                con.storeFile(file.getOriginalFilename(), file.getInputStream());
+                con.logout();
+                con.disconnect();
 
             if(!Files.exists(Path.of(uploadPathImagem))) {
                 Files.createDirectories(Path.of(uploadPathImagem));
@@ -141,17 +144,14 @@ public class FileService {
             fileResponse.setSize(file.getSize());
             fileResponse.setStatusMessage("Sucesso !!!!!!!!!");
             
-            con.storeFile(file.getOriginalFilename(), file.getInputStream());
-            con.logout();
-            con.disconnect();
         
             return fileResponse;
-            }
+            
         }catch (IOException e) {
             throw new RuntimeException(e);
         
     }
-        return null;
+     
 
     
     
