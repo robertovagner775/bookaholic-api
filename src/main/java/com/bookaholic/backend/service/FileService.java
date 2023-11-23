@@ -58,7 +58,7 @@ public class FileService {
 
             con.login(LOGIN, PSW);
                 con.enterLocalPassiveMode();
-                con.setFileType(FTP.FILE_STRUCTURE);
+                con.setFileType(FTP.BINARY_FILE_TYPE);
 
                 
                 var originalFileName = file.getOriginalFilename();
