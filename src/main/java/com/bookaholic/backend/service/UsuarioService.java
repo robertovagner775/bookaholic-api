@@ -57,7 +57,7 @@ public class UsuarioService {
             return ResponseEntity.badRequest().body("Error: Email is already in use!");
         }
 
-        usuario.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+        usuario.setRoles(Arrays.asList(roleRepository.findByName("ROLE_ADMIN")));
 
         repositorio.save(usuario);
 
