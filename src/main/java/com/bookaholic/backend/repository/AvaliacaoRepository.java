@@ -13,7 +13,7 @@ import com.bookaholic.backend.model.LivroDto;
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long> {
 
 
-    @Query("SELECT new com.bookaholic.backend.dto.SelecAvalDto( AVG(a.qtd_estrela) score, COUNT(*) quantidade )  FROM avaliacao a JOIN a.livro l WHERE l.id_livro = :id Group BY l.id_livro")
+    @Query("SELECT new com.bookaholic.backend.dto.SelecAvalDto( AVG(a.qtd_estrela) score, COUNT(*) quantidade, l.titulo )  FROM avaliacao a JOIN a.livro l WHERE l.id_livro = :id Group BY l.id_livro")
     SelecAvalDto findByAvalId(Long id);
     
     @Query("SELECT new com.bookaholic.backend.dto.ListAvalUserDto(a.qtd_estrela, u.username nome_usuario, a.descricao descricao, a.created  created) FROM avaliacao a JOIN a.usuario u  JOIN a.livro l WHERE l.id_livro = :id")
