@@ -58,7 +58,7 @@ public class FileService {
 
             con.login(LOGIN, PSW);
                 con.enterLocalPassiveMode();
-                con.setFileType(FTP.COMPRESSED_TRANSFER_MODE);
+                con.setFileType(FTP.FILE_STRUCTURE);
 
                 
                 var originalFileName = file.getOriginalFilename();
