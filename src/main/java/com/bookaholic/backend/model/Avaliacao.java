@@ -44,12 +44,12 @@ public class Avaliacao {
     private int qtd_estrela;
     private String descricao;
 
-    @OneToOne(targetEntity = Livro.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Livro.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "id_livro")
     private Livro livro;
 
 
-    @OneToOne(targetEntity = Usuario.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Usuario.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "id_usuario")
     private Usuario usuario;
 
