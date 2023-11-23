@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -34,7 +35,7 @@ public class AuthenticationService implements UserDetailsService {
             
         } else if (usuario.isEnabled() ==  false){
             
-            throw new BadCredentialsException("user not found");
+            throw new DisabledException("user not enabled");
         } 
         else {
             return usuario; 
