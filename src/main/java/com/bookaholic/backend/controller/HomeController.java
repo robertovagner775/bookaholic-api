@@ -42,4 +42,9 @@ public class HomeController {
     public List<LivroDto> viewLivroAlfabetica() {
         return imagemRepository.findAllJoinBookDois();
     }
+     
+    @GetMapping("/categoria")
+    public List<LivroDto> viewLivroCategoria(@RequestParam("title") String title) {
+        return imagemRepository.findAllByBook(title);
+    }
 }
